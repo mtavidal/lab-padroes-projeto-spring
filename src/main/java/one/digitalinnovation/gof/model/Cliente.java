@@ -1,10 +1,10 @@
 package one.digitalinnovation.gof.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import one.digitalinnovation.gof.notification.ConteudoEmail;
+import one.digitalinnovation.gof.strategy.DescontoStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 public class Cliente {
@@ -15,6 +15,16 @@ public class Cliente {
 	private String nome;
 	@ManyToOne
 	private Endereco endereco;
+	private DescontoStrategy descontoStrategy;
+	private EmailBoasVindas email;
+
+	public DescontoStrategy getDescontoStrategy() {
+		return descontoStrategy;
+	}
+
+	public void setDescontoStrategy(DescontoStrategy descontoStrategy) {
+		this.descontoStrategy = descontoStrategy;
+	}
 
 	public Long getId() {
 		return id;

@@ -1,5 +1,8 @@
 package one.digitalinnovation.gof.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -26,6 +29,7 @@ public class Endereco {
 	private String gia;
 	private String ddd;
 	private String siafi;
+
 
 	public String getCep() {
 		return cep;

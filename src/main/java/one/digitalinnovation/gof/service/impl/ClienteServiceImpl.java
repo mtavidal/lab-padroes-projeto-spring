@@ -2,6 +2,7 @@ package one.digitalinnovation.gof.service.impl;
 
 import java.util.Optional;
 
+import one.digitalinnovation.gof.request.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,17 +48,26 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public void inserir(Cliente cliente) {
-		salvarClienteComCep(cliente);
+	public Cliente inserir(ClienteDTO clienteDTO) {
+		Cliente cliente = new Cliente();
+		cliente.setNome(clienteDTO.getNome());
+		Endereco endereco = new Endereco();
+		endereco.setCep(clienteDTO.getCep());
+		cliente.setEndereco(endereco);
+		cliente.setDescontoStrategy(clienteDTO.getDescontoStrategy());
+		return salvarClienteComCep(cliente);
 	}
 
 	@Override
-	public void atualizar(Long id, Cliente cliente) {
+	public Cliente atualizar(Long id, ClienteDTO clienteDTO) {
 		// Buscar Cliente por ID, caso exista:
 		Optional<Cliente> clienteBd = clienteRepository.findById(id);
 		if (clienteBd.isPresent()) {
-			salvarClienteComCep(cliente);
+			clienteBd.get().setNome(clienteDTO.getNome());
+			clienteBd.get().getEndereco().setCep(clienteDTO.getCep());
+			return salvarClienteComCep(clienteBd.get());
 		}
+		return null;
 	}
 
 	@Override
@@ -66,7 +76,7 @@ public class ClienteServiceImpl implements ClienteService {
 		clienteRepository.deleteById(id);
 	}
 
-	private void salvarClienteComCep(Cliente cliente) {
+	private Cliente salvarClienteComCep(Cliente cliente) {
 		// Verificar se o Endereco do Cliente já existe (pelo CEP).
 		String cep = cliente.getEndereco().getCep();
 		Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {
@@ -75,9 +85,13 @@ public class ClienteServiceImpl implements ClienteService {
 			enderecoRepository.save(novoEndereco);
 			return novoEndereco;
 		});
+
 		cliente.setEndereco(endereco);
 		// Inserir Cliente, vinculando o Endereco (novo ou existente).
-		clienteRepository.save(cliente);
+		Cliente clienteBd = clienteRepository.save(cliente);
+		clienteBd.getDescontoStrategy().getTemplateEmail().enviaEmail(cliente);
+
+		return clienteBd;
 	}
 
 }
