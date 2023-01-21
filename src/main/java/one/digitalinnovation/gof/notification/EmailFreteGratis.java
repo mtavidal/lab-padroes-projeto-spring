@@ -4,7 +4,6 @@ import one.digitalinnovation.gof.model.Cliente;
 
 public class EmailFreteGratis extends NotificacaoViaEmail {
 
-
     @Override
     void preNotificacao(Cliente cliente) {
         super.conteudoEmail.setTitulo("Cadastro Realizado - Cliente com Frete Gratuito");
@@ -14,6 +13,5 @@ public class EmailFreteGratis extends NotificacaoViaEmail {
     @Override
     void posNotificacao(Cliente cliente) {
         System.out.println("Email enviado com sucesso!");
-
     }
 }

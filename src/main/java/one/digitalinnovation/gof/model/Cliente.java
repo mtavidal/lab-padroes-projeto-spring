@@ -1,10 +1,8 @@
 package one.digitalinnovation.gof.model;
 
-import one.digitalinnovation.gof.notification.ConteudoEmail;
 import one.digitalinnovation.gof.strategy.DescontoStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Entity
 public class Cliente {
@@ -16,7 +14,6 @@ public class Cliente {
 	@ManyToOne
 	private Endereco endereco;
 	private DescontoStrategy descontoStrategy;
-	private EmailBoasVindas email;
 
 	public DescontoStrategy getDescontoStrategy() {
 		return descontoStrategy;

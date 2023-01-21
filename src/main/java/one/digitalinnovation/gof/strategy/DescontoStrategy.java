@@ -4,8 +4,11 @@ import one.digitalinnovation.gof.notification.EmailDesconto;
 import one.digitalinnovation.gof.notification.EmailFreteGratis;
 import one.digitalinnovation.gof.notification.EmailSemDesconto;
 import one.digitalinnovation.gof.notification.NotificacaoViaEmail;
+import org.springframework.stereotype.Component;
 
+@Component
 public enum DescontoStrategy {
+
     CAPITAL {
         @Override
         public NotificacaoViaEmail getTemplateEmail() {

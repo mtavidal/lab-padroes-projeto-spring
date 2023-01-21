@@ -2,9 +2,8 @@ package one.digitalinnovation.gof.notification;
 
 import one.digitalinnovation.gof.model.Cliente;
 
+
 public class EmailDesconto extends NotificacaoViaEmail {
-
-
     @Override
     void preNotificacao(Cliente cliente) {
         super.conteudoEmail.setTitulo("Cadastro Realizado - Cliente com Desconto no Frete");
